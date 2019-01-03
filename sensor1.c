@@ -94,7 +94,7 @@ int main(void) {
 
 void setTime() {
 //Slave,register Address, init data
-	data[0] = REG_SECONDS;               //Address of sec
+	data[0] = REG_SECONDS;        //Address of sec
 	data[1] = rtc.sec = 1;
 	data[2] = rtc.min = 52;
 	data[3] = rtc.hour = 8;
@@ -168,7 +168,7 @@ void i2cTransmit(uint8_t data[]) {
 		}
 
 		while((UCB0STAT & BUSY)!= 0);
-		 	 UCB0CTL1 |= UCTXSTP ;//stop();
+		 	 UCB0CTL1 |= UCTXSTP ; //stop();
 
 
 }
@@ -190,7 +190,7 @@ void getTime(unsigned char *array) {
 
 		for(i = 0; i < ARRAY_LENGTH; i++) {
 
-			while(!(IFG2 & UCB0RXIFG)){}   //wait till rec char(IFGRX=1 !(1&0) ->!0 = 1, !(1&1) ->!1 = 0
+			while(!(IFG2 & UCB0RXIFG)){}   //wait till rec char
 		 	 *array = UCB0RXBUF;
 		 	 *array++;
 	    }
@@ -219,8 +219,8 @@ int getTimeI2C() {
 	  UCB0BR0 = 10;
 	  UCB0BR1 = 0;
 	  UCB0CTL1 = UCSSEL_2 + UCSWRST;
-	  UCB0I2CSA = I2C_ADDRESS;           		  // Slave address
-	  UCB0CTL1 &= ~UCSWRST;					     // Clear reset
+	  UCB0I2CSA = I2C_ADDRESS;           		// Slave address
+	  UCB0CTL1 &= ~UCSWRST;					    // Clear reset
 	
 	//start();
 	  UCB0CTL1 |= UCTR | UCTXSTT;
