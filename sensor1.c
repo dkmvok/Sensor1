@@ -46,6 +46,7 @@ int test;
 int main(void) {
 	// Stop watchdog timer
       WDTCTL = WDTPW + WDTHOLD;
+	  
     // Configure the clock module - MCLK = 1MHz
       DCOCTL = 0;
       BCSCTL1 = CALBC1_1MHZ;
@@ -58,7 +59,7 @@ int main(void) {
     //Global interrupt enable
       __bis_SR_register(GIE);
     // Initialize i2c
-     if(!i2cInit()){
+     if(!i2cInit()) {
     	 test = 1;
      }
      else {
@@ -73,7 +74,6 @@ int main(void) {
       RTCInit();
 
       i2cTransmit(data);
-
 
      for(i = 0; i < ARRAY_LENGTH; i++) {
 
@@ -93,7 +93,6 @@ int main(void) {
 
 
 void setTime() {
-
 //Slave,register Address, init data
 	data[0] = REG_SECONDS;               //Address of sec
 	data[1] = rtc.sec = 1;
@@ -118,7 +117,6 @@ int i2cInit() {
 void RTCInit() {
 	int error;
 	
-	// Begin  Write
 	 UCB0I2CSA = I2C_ADDRESS;           		  // Slave address
 	 UCB0CTL1 &= ~UCSWRST;					     // Clear reset
 
@@ -154,15 +152,15 @@ void i2cTransmit(uint8_t data[]) {
 			  while((IFG2 & UCB0TXIFG) == 0);  //UCB0TXIFG is set when UCB0TXBUF is empty
 			  error = ackOrNack();
 
-			if (!error){
+			if (!error) {
 				testB = 2;
 			}
-			else{
+			else {
 				testB = 3;
 			}
 			IFG2 &= ~UCB0TXIFG;
 			totalBytes--;
-		}
+		  }
 		
 		for(i = 0; i < ARRAY_LENGTH; i++) {
 
@@ -195,16 +193,16 @@ void getTime(unsigned char *array) {
 			while(!(IFG2 & UCB0RXIFG)){}   //wait till rec char(IFGRX=1 !(1&0) ->!0 = 1, !(1&1) ->!1 = 0
 		 	 *array = UCB0RXBUF;
 		 	 *array++;
-	   }
+	    }
 		UCB0CTL1 |= UCTXSTP;//stop();
-	}
+	 }
 
 	/*	for(i = 0; i < ARRAY_LENGTH; i++) {
 
 			convertedData[i] = bcd2bin(recData[i] & maskData[i]);  //convert data
 		}*/
-
 }
+
 void setupCommI2C() {
 
 	UCB0I2CSA = I2C_ADDRESS;           			 // Slave address
@@ -213,7 +211,6 @@ void setupCommI2C() {
 }
 
 int getTimeI2C() {
-
 	  int i = 0;
 	  int error = -1;
 
@@ -225,7 +222,6 @@ int getTimeI2C() {
 	  UCB0I2CSA = I2C_ADDRESS;           		  // Slave address
 	  UCB0CTL1 &= ~UCSWRST;					     // Clear reset
 	
-
 	//start();
 	  UCB0CTL1 |= UCTR | UCTXSTT;
 
@@ -267,11 +263,11 @@ int getTimeI2C() {
 }
 
 
-unsigned int bin2bcd (unsigned int value) {
+unsigned int bin2bcd(unsigned int value) {
 	return value + 6 * (value / 10);
 }
 
-unsigned int bcd2bin (unsigned int value) {
+unsigned int bcd2bin(unsigned int value) {
 	return value - 6 * (value >> 4);
 }
 
