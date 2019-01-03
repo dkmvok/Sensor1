@@ -31,7 +31,6 @@ typdef struct {
 	uint8_t month;
 	uint8_t year;
 
-
 }rtc;
 
 
@@ -164,12 +163,13 @@ void i2cTransmit(uint8_t data[]) {
 			IFG2 &= ~UCB0TXIFG;
 			totalBytes--;
 		}
-	for(i = 0; i < ARRAY_LENGTH; i++) {
+		
+		for(i = 0; i < ARRAY_LENGTH; i++) {
 
-		testdata[i] = bcd2bin(testdata[i] & maskData[i]);  //convert data
-	}
+			testdata[i] = bcd2bin(testdata[i] & maskData[i]);  //convert data
+		}
 
-	 while((UCB0STAT & BUSY)!= 0);
+		while((UCB0STAT & BUSY)!= 0);
 		 	 UCB0CTL1 |= UCTXSTP ;//stop();
 
 
@@ -188,7 +188,7 @@ void getTime(unsigned char *array) {
 
 	 error = ackOrNack();
 
-	 if(error == FALSE){ 					//nacK not encountered
+	 if(error == FALSE) { 					//nacK not encountered
 
 		for(i = 0; i < ARRAY_LENGTH; i++) {
 
@@ -267,17 +267,16 @@ int getTimeI2C() {
 }
 
 
-unsigned int bin2bcd (unsigned int value){
+unsigned int bin2bcd (unsigned int value) {
 	return value + 6 * (value / 10);
 }
 
-unsigned int bcd2bin (unsigned int value){
+unsigned int bcd2bin (unsigned int value) {
 	return value - 6 * (value >> 4);
 }
 
 // If slave ack the address the UCTXSTT is cleared
 int ackOrNack() {
-
 	int nack = FALSE;
 		//both should work comment one out
 		if(UCB0STAT & UCNACKIFG) {
@@ -286,7 +285,6 @@ int ackOrNack() {
 			UCB0STAT  &= ~UCNACKIFG;  //Clear NACK Flag
 		}
 		return nack;
-
 }
 
 void start() {
