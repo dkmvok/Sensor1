@@ -11,11 +11,11 @@ void stop();
 int writeI2C();
 int ackOrNack();
 void RTCInit();
-unsigned int bin2bcd(unsigned int value);
-unsigned int bcd2bin(unsigned int value);
+unsigned char bin2bcd(unsigned char value);
+unsigned char bcd2bin(unsigned char value);
 int getTimeI2C();
 int i2cInit();
-void i2cTransmit(unsigned int data[]);
+void i2cTransmit(unsigned char data[]);
 void getTime(unsigned char *array);
 void setupCommI2C();
 void setTime();
@@ -36,9 +36,9 @@ typdef struct {
 
 // [ address 00h, rtc.sec, rtc.min, rtc.hour, rtc weekday, rtc date, rtc month, rtc year]
 uint8_t data[TOTAL_BYTES];	
-unsigned int recData[ARRAY_LENGTH]; //{seconds, minutes, hours, day, date, month, year}
-unsigned int convertedData[ARRAY_LENGTH];
-unsigned int maskData[ARRAY_LENGTH] = {0x7F,0x7F,0x3F,0x7,0x3F,0x1F,0xFF};
+unsigned char recData[ARRAY_LENGTH]; //{seconds, minutes, hours, day, date, month, year}
+unsigned char convertedData[ARRAY_LENGTH];
+unsigned char maskData[ARRAY_LENGTH] = {0x7F,0x7F,0x3F,0x7,0x3F,0x1F,0xFF};
 unsigned char whatTimeIsIt[8];
 //_Bool test;
 int test;
@@ -263,11 +263,11 @@ int getTimeI2C() {
 }
 
 
-unsigned int bin2bcd(unsigned int value) {
+unsigned char bin2bcd(unsigned char value) {
 	return value + 6 * (value / 10);
 }
 
-unsigned int bcd2bin(unsigned int value) {
+unsigned char bcd2bin(unsigned char value) {
 	return value - 6 * (value >> 4);
 }
 
