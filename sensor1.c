@@ -135,14 +135,14 @@ void i2cTransmit(uint8_t data[]) {
 
 		  error = ackOrNack();
 		  IFG2 &= ~UCB0TXIFG;
-		  if (!error){
+		  if (!error) {
 			  testA = 1;
 		  }
-		  else{
+		  else {
 			  testA = 0;
 		  }
 
-	//IFG2 &= ~UCB0TXIFG;
+	    //IFG2 &= ~UCB0TXIFG;
 		  i = 0;
 		  //send register address + data
 		  while(error == FALSE && totalBytes > 0) {
