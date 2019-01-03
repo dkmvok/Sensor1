@@ -11,9 +11,9 @@ void stop();
 int writeI2C();
 int ackOrNack();
 void RTCInit();
-unsigned int bin2bcd (unsigned int val);
-unsigned int bcd2bin (unsigned int val);
-int getTimeI2C(/*unsigned char data*/);
+unsigned int bin2bcd (unsigned int value);
+unsigned int bcd2bin (unsigned int value);
+int getTimeI2C();
 int i2cInit();
 void i2cTransmit(unsigned int data[]);
 void getTime(unsigned char *array);
@@ -118,8 +118,8 @@ int i2cInit() {
 
 void RTCInit() {
 	int error;
-	// Begin  Write
 	
+	// Begin  Write
 	 UCB0I2CSA = I2C_ADDRESS;           		  // Slave address
 	 UCB0CTL1 &= ~UCSWRST;					     // Clear reset
 
@@ -212,10 +212,10 @@ void setupCommI2C() {
 
 }
 
-int getTimeI2C(/*unsigned char data*/) {
+int getTimeI2C() {
 
 	  int i = 0;
-	  int error = 5;
+	  int error = -1;
 
 	  UCB0CTL1 |= UCSWRST;                      // Software reset enabled
 	  UCB0CTL0 |= UCMODE_3 | UCMST | UCSYNC;    // I2C mode, Master mode, sync, Sending, SMCLK set UCTR fotr W
@@ -267,12 +267,12 @@ int getTimeI2C(/*unsigned char data*/) {
 }
 
 
-unsigned int bin2bcd (unsigned int val){
-	return val + 6 * (val / 10);
+unsigned int bin2bcd (unsigned int value){
+	return value + 6 * (value / 10);
 }
 
-unsigned int bcd2bin (unsigned int val){
-	return val - 6 * (val >> 4);
+unsigned int bcd2bin (unsigned int value){
+	return value - 6 * (value >> 4);
 }
 
 // If slave ack the address the UCTXSTT is cleared
@@ -280,7 +280,7 @@ int ackOrNack() {
 
 	int nack = FALSE;
 		//both should work comment one out
-		if(UCB0STAT & UCNACKIFG){
+		if(UCB0STAT & UCNACKIFG) {
 			nack = TRUE;
 			UCB0CTL1 |= UCTXSTP; //STOP TRANSMISSION
 			UCB0STAT  &= ~UCNACKIFG;  //Clear NACK Flag
@@ -290,7 +290,7 @@ int ackOrNack() {
 }
 
 void start() {
-     /*UCTR = 1 UCTXSTT = 1*/
+        // UCTR = 1 UCTXSTT = 1
 	//UCB0CTL1 |= 0b00000010 //set as transmitter and send start condition
 	// UCB0CTL1 |= UCTR | UCTXSTT;
 }
