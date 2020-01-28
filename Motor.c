@@ -6,7 +6,7 @@
  * main.c
  */
 
-typedef enum motorStates { motorOff, motorOn } motorState;
+typedef enum { motorOff, motorOn } motorState;
 typedef enum { false = 0, true = !false } bool;
 
 
@@ -19,6 +19,8 @@ int main(void) {
 
     P1OUT &= 0x00;	// Reset
     P1DIR &= 0x00;
+    P2OUT &= 0x00;
+    P2DIR &= 0x00;
 
     P1DIR |= BIT0 + BIT1 + BIT2 + BIT4 + BIT6;	//Set only numbered ports as output
     P1REN |= BIT3;
