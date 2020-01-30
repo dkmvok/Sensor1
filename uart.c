@@ -18,7 +18,7 @@ static const struct baudRates baudRateTable[] =  {
 };
 
 unsigned char = ch;
-char message[ARRAY_SIZE] = 0;
+char message[ARRAY_SIZE];
 
 int main(void) {
 
@@ -114,7 +114,7 @@ void putChar(unsigned ch) {
 void putString(unsigned char *txMessage) {
 
 	unsigned int i = 0;
-	unsigned char ch;
+	//unsigned char ch;
 
 	while(*txMessage != '\0'){
 		 putChar(*txMessage++);
