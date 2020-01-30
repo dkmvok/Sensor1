@@ -15,9 +15,8 @@ static const struct baudRates baudRateTable[] =  {
 		{2400, 4800, 9600}
 
 };
-
-
 char message[ARRAY_SIZE] = 0;
+
 int main(void) {
 
     WDTCTL = WDTPW | WDTHOLD;	// Stop watchdog timer
