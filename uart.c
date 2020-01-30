@@ -10,7 +10,6 @@
 //2400, 4800, 9600
 
 int ARRAY_SIZE = 10;
-
 const unsigned baudRate = 9600;
 static const struct baudRates baudRateTable[] =  {
 		{2400, 4800, 9600}
@@ -89,18 +88,18 @@ void getString(char *rxMessage, int length) {
 		*rxMessage = getChar();
 		if( *rxMessage == '\r') {
 
-				while(i < length) {
+			while(i < length) {
 
-					*rxMessage = '\0';
-					i++;
+			  *rxMessage = '\0';
+			  i++;
 
-				}
-				break;
-	   }
-	*rxMessage++;
+			}
+			break;
+	     }
+	 *rxMessage++;
 
    }
-	return;
+   return;
 }
 
 void putChar(unsigned ch) {
