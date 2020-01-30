@@ -16,6 +16,8 @@ static const struct baudRates baudRateTable[] =  {
 
 };
 char message[ARRAY_SIZE] = 0;
+unsigned char = ch;
+
 
 int main(void) {
 
@@ -24,9 +26,6 @@ int main(void) {
     DCOCTL = CALDCO_16MHZ;
 
     uartInit();
-
-    unsigned char = ch;
-
     print("TestIO\n\r");
     putString((char *)"Testing\n");
     ch = getChar();
