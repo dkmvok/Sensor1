@@ -2,22 +2,22 @@
 #include <stdio.h>
 #include <stdint.h>
 #include "uart.h"
-
+#define ARRAY_SIZE 16
 /*
  * main.c
  */
 //2400, 4800, 9600
 
-int messageLength = 10;
-const unsigned long clkHZ = 16000000;
+//int ARRAY_SIZE = 10;
+
 const unsigned baudRate = 9600;
 static const struct baudRates baudRateTable[] =  {
 		{2400, 4800, 9600}
-	
+
 };
 
 
-char message[messageLength] = 0;
+char message[ARRAY_SIZE] = 0;
 int main(void) {
 
     WDTCTL = WDTPW | WDTHOLD;	// Stop watchdog timer
@@ -36,7 +36,7 @@ int main(void) {
 
     	while(1) {
 
-    		getString(message,messageLength);
+    		getString(message,ARRAY_SIZE);
     		putString(message);
 
 
@@ -61,8 +61,8 @@ void uartInit(void) {
 	IE2 |= UCA0RXIE;
 
 
-	didRecieve = 0;
-	didTransmit = 0;
+	//didRecieve = 0;
+	//didTransmit = 0;
 
 	return;
 
@@ -109,7 +109,7 @@ void putChar(unsigned ch) {
 	while(!IFG2 & UCA0TXIFG));
 		UCA0TXBUF = ch;
 
-	return c;
+	return;
 
 }
 
@@ -119,11 +119,11 @@ void putString(unsigned char *txMessage) {
 	unsigned char ch;
 
 	while(*txMessage != '\0'){
-		ch = putChar(*txMessage++);
+		 putChar(*txMessage++);
 
-		if( ch == '\n') {
+		if(*txMessage == '\n') {
 
-		    putChar('\r');
+		     putChar('\r');
 
 		}
 
