@@ -2,22 +2,23 @@
 #include <stdio.h>
 #include <stdint.h>
 #include "uart.h"
-#define ARRAY_SIZE 16
+//#define ARRAY_SIZE 16
+
 /*
  * main.c
  */
 //2400, 4800, 9600
 
-//int ARRAY_SIZE = 10;
+int ARRAY_SIZE = 10;
 
 const unsigned baudRate = 9600;
 static const struct baudRates baudRateTable[] =  {
 		{2400, 4800, 9600}
 
 };
-char message[ARRAY_SIZE] = 0;
-unsigned char = ch;
 
+unsigned char = ch;
+char message[ARRAY_SIZE] = 0;
 
 int main(void) {
 
@@ -106,7 +107,6 @@ void putChar(unsigned ch) {
 
 	while(!IFG2 & UCA0TXIFG));
 		UCA0TXBUF = ch;
-
 	return;
 
 }
