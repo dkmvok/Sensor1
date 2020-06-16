@@ -193,7 +193,7 @@ void getTime(unsigned char *array) {
 			while(!(IFG2 & UCB0RXIFG)){}   //wait till rec char
 		 	 *array = UCB0RXBUF;
 		 	 *array++;
-	    }
+	   	}
 		UCB0CTL1 |= UCTXSTP;//stop();
 	 }
 
