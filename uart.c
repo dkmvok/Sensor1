@@ -58,10 +58,6 @@ void uartInit(void) {
 	UCA0CTL1 &= ~UCSWRT;
 	IE2 |= UCA0RXIE;
 
-
-	//didRecieve = 0;
-	//didTransmit = 0;
-
 	return;
 
 }
@@ -113,7 +109,6 @@ void putChar(unsigned ch) {
 void putString(unsigned char *txMessage) {
 
 	unsigned int i = 0;
-	//unsigned char ch;
 
 	while(*txMessage != '\0'){
 		 putChar(*txMessage++);
