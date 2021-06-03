@@ -1,7 +1,7 @@
 #include <msp430.h> 
 #include <stdbool.h>
 #include "utils.h"
-//Version1.0.2
+// Version1.0.2
 #define TRUE 1
 #define FALSE 0
 
@@ -65,7 +65,7 @@ int main(void) {
      else {
     	 test = 0;
      }
-	//  test = getTimeI2C();
+    // test = getTimeI2C();
 
     // Set Init Values
       setTime();
@@ -84,7 +84,7 @@ int main(void) {
     // Read data
       while(1) {
 
-    //	getTime(&whatTimeIsIt[0]);//
+    // getTime(&whatTimeIsIt[0]);//
 
       }
 
